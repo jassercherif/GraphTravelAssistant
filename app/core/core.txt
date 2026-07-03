@@ -1,0 +1,11 @@
+IF using Neo4j 5.x use 
+
+CREATE VECTOR INDEX chunk_embeddings
+FOR (c:Chunk)
+ON (c.embedding)
+OPTIONS {
+  indexConfig: {
+    `vector.dimensions`: 768,
+    `vector.similarity_function`: 'cosine'
+  }
+};
