@@ -3,11 +3,11 @@ import random
 import re
 import uuid
 
-from sources import SOURCES
-from firecrawl_loader import load_page
-from chunker import chunk_text
-from graph_transformer import get_transformer
-from neo4j_client import Neo4jClient
+from app.ingestion.sources import SOURCES
+from app.ingestion.firecrawl_loader import load_page
+from app.ingestion.chunker import chunk_text
+from app.ingestion.graph_transformer import get_transformer
+from app.ingestion.neo4j_client import Neo4jClient
 
 from app.ingestion.embedding_generator import embed_documents
 

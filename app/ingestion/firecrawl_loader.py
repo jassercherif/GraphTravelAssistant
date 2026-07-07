@@ -1,8 +1,5 @@
 from firecrawl import FirecrawlApp
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-#from config import FIRECRAWL_API_KEY
 from app.core.config import FIRECRAWL_API_KEY
 
 app = FirecrawlApp(api_key=FIRECRAWL_API_KEY)

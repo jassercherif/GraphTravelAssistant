@@ -1,9 +1,6 @@
 #app\ingestion\graph_transformer.py
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_core.prompts import ChatPromptTemplate
-import os, sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from app.brains import gpt_oss_med
 

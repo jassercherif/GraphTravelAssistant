@@ -1,36 +1,42 @@
-# app/api/routes.py
+from fastapi import APIRouter, HTTPException
 
-from fastapi import FastAPI
-from pydantic import BaseModel
-
-from app.graph.neo4j_client import Neo4jClient
-from app.retriever.graph_retriever import GraphRetriever
-from app.rag.rag_chain import RAGChain
-
-app = FastAPI()
-
-# INIT SYSTEM
-db = Neo4jClient("bolt://localhost:7687", "neo4j", "password")
-
-retriever = GraphRetriever(db)
-
-# dummy LLM (replace with Fireworks/OpenAI)
-class DummyLLM:
-    def invoke(self, prompt):
-        return "LLM ANSWER BASED ON CONTEXT:\n" + prompt[:300]
-
-llm = DummyLLM()
-
-rag = RAGChain(retriever, llm)
+from app.rag.rag_pipeline import RAGPipeline
+from app.api.schemas import ChatRequest, ChatResponse
 
 
-# REQUEST MODEL
-class Query(BaseModel):
-    question: str
+router = APIRouter(
+    prefix="/chat",
+    tags=["Chat"]
+)
 
 
-@app.post("/ask")
-def ask(query: Query):
-    return {
-        "answer": rag.ask(query.question)
-    }
+# Initialize once
+rag_pipeline = RAGPipeline()
+
+
+
+@router.post(
+    "/",
+    response_model=ChatResponse
+)
+async def chat(request: ChatRequest):
+
+    try:
+
+        query = request.query
+
+        answer = rag_pipeline.ask(query)
+
+
+        return ChatResponse(
+            query=query,
+            answer=answer
+        )
+
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )

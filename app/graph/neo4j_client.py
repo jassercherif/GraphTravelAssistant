@@ -1,8 +1,6 @@
 # app/graph/neo4j_client.py
 
 from neo4j import GraphDatabase
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from app.core.config import NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD
 
