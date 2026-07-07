@@ -7,7 +7,6 @@ A FastAPI-based Travel Assistant using GraphRAG (Graph-based Retrieval Augmented
 ```
 TravelAIAgent/
 ├── main.py                 # Application entry point
-├── verify_imports.py       # Import verification script
 ├── pyproject.toml         # Project dependencies
 ├── docker-compose.yaml    # Docker setup
 └── app/
@@ -75,21 +74,13 @@ docker-compose up -d
 ### Option 1: Using main.py (Recommended)
 
 ```bash
-python main.py
+uv run main.py
 ```
 
 ### Option 2: Using uvicorn directly
 
 ```bash
-uvicorn app.app:app --reload --host 0.0.0.0 --port 8000
-```
-
-### Verify Imports
-
-Before running, you can verify all imports are working:
-
-```bash
-python verify_imports.py
+uv run uvicorn app.app:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ## API Endpoints
@@ -136,13 +127,13 @@ Response:
 ✅ Correct:
 ```bash
 cd TravelAIAgent
-python main.py
+uv run main.py
 ```
 
 ❌ Wrong:
 ```bash
 cd TravelAIAgent/app
-python app.py  # This will fail with import errors
+uv run app.py  # This will fail with import errors
 ```
 
 ### Why?
@@ -157,7 +148,6 @@ If you see `ModuleNotFoundError: No module named 'app.rag'`:
 
 1. Make sure you're in the project root directory
 2. Verify all `__init__.py` files exist
-3. Run `python verify_imports.py` to diagnose
 
 ### Missing Dependencies
 
